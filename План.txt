@@ -1,0 +1,14 @@
+23.09
+  gulpfile.js - htmlDev (1)
+
+18.09
+  style.scss, index.html, (1)
+  gulpfile.js - stylesDev (1)
+
+  gulpfile.js - bsRun, watchRun, stylesDev (1)
+  gulpfile.js - stylesBuild, paths.*.styles, clean (0.5)
+
+
+23.08.2020
+  Add, make  folders structure protoypes - File structure.txt
+  

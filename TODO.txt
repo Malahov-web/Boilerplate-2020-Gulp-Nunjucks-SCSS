@@ -1,0 +1,14 @@
+24.09
+JS сборку исходников на ES6, Babel, WebPack?
+
+18.09
+Написать все таски gulp (Перенести весь функционал из Boilerplate-2019-Gulp)
+Опробовать file structure v1
+
+23.08
+Написать gulpfile в функциональном стиле,
+разделить таски по файлам,
+использовать module exports
+
+file structure - 3 варианта:
+https://dillinger.io/

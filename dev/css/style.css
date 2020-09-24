@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/*
+ * Table of contents   Содержание
+ *
+ *  0. Imports
+ *  1. General Vars, Mixins, Extends
+
+ *  14.
+ *
+ */
+html {
+  overflow: hidden;
+  font-size: inherit;
+  display: block;
+  margin: 0 auto; }
+
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  font-size: inherit;
+  font-family: inherit; }
+
+header {
+  width: 100%;
+  padding: 1rem  0;
+  background-color: #fff;
+  background-color: #3c9;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3R5bGUuY3NzIiwic291cmNlcyI6WyJzdHlsZS5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0ICd1dGYtOCc7XHJcblxyXG4vKlxyXG4gKiBUYWJsZSBvZiBjb250ZW50cyAgINCh0L7QtNC10YDQttCw0L3QuNC1XHJcbiAqXHJcbiAqICAwLiBJbXBvcnRzXHJcbiAqICAxLiBHZW5lcmFsIFZhcnMsIE1peGlucywgRXh0ZW5kc1xyXG5cclxuICogIDE0LlxyXG4gKlxyXG4gKi9cclxuXHJcblxyXG4kYWNjZW50OiAjM2M5O1xyXG5cclxuXHJcbmh0bWwge1xyXG5cclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBmb250LXNpemU6IGluaGVyaXQ7XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIG1hcmdpbjogMCBhdXRvO1xyXG5cclxufVxyXG5cclxuYm9keSB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG1pbi1oZWlnaHQ6IDEwMCU7XHJcbiAgICBtYXJnaW46IDA7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcclxuICAgIGZvbnQtc2l6ZTogaW5oZXJpdDtcclxuICAgIGZvbnQtZmFtaWx5OiBpbmhlcml0O1xyXG5cclxufVxyXG5cclxuaGVhZGVyIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgcGFkZGluZzogMXJlbSAgMDtcclxuICAgIC8vIGJhY2tncm91bmQtY29sb3I6ICMzOWM7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogJGFjY2VudDtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAvLyB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgwLCAtMTAlKTtcclxuICAgIC8vIG9wYWNpdHk6IDAuNTtcclxuXHJcbn0iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUVBOzs7Ozs7OztHQVFHO0FBTUgsQUFBQSxJQUFJLENBQUM7RUFFRCxRQUFRLEVBQUUsTUFBTTtFQUNoQixTQUFTLEVBQUUsT0FBTztFQUNsQixPQUFPLEVBQUUsS0FBSztFQUNkLE1BQU0sRUFBRSxNQUFNLEdBRWpCOztBQUVELEFBQUEsSUFBSSxDQUFDO0VBQ0QsS0FBSyxFQUFFLElBQUk7RUFDWCxVQUFVLEVBQUUsSUFBSTtFQUNoQixNQUFNLEVBQUUsQ0FBQztFQUNULE9BQU8sRUFBRSxDQUFDO0VBQ1YsZ0JBQWdCLEVBQUUsSUFBSTtFQUN0QixTQUFTLEVBQUUsT0FBTztFQUNsQixXQUFXLEVBQUUsT0FBTyxHQUV2Qjs7QUFFRCxBQUFBLE1BQU0sQ0FBQztFQUNILEtBQUssRUFBRSxJQUFJO0VBQ1gsT0FBTyxFQUFFLE9BQU87RUFFaEIsZ0JBQWdCLEVBQUUsSUFBSTtFQUN0QixnQkFBZ0IsRUE1QlgsSUFBSTtFQTZCVCxPQUFPLEVBQUUsSUFBSSxHQUloQiJ9 */
