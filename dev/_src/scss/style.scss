@@ -11,7 +11,52 @@
  */
 
 
+@import 'services/services'; // services and helpers functions
+@import 'libs';         // external libs
+@import 'fonts';        // fonts add
+@import 'mwgrid';       // layout framework
+
+@import 'vars';
+@import 'mixins';
+@import 'base';         // base, 
+
+@import 'plugins/plugins'; // external plugins custom styles
+// @import 'components';   // moved to -> _base
+// @import 'print';     // print v styles
+
 $accent: #3c9;
+$accent: #9c3;
+
+
+/* 1. General, structure
+ * **********************************************************************
+ *  
+*/
+
+/* 2. Header
+ * **********************************************************************
+ *  
+*/
+
+.header{
+
+}
+.header-top{
+
+}
+.logo{
+
+    img{
+        width: auto; max-width: 100%; height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+   
+    
+} /* media end */
+
+
 
 
 html {
@@ -40,8 +85,15 @@ header {
     // background-color: #39c;
     background-color: #fff;
     background-color: $accent;
-    display: flex;
+    // display: flex;
     // transform: translate(0, -10%);
     // opacity: 0.5;
 
+}
+
+.title {
+    // font-size: get_font_size();
+    color: #000;
+
+    @include font_size_pro('h3');
 }

@@ -1,3 +1,12 @@
+..Перенести блоки и компоненты, затем js, И дописать остальные таски
+18.12
+  dev/_src/scss/ mixins/_set_fonts_object.scss
+
+17.12
+  Парадигма.txt, dev/_src/scss/ { _fonts.scss, _services.scss } (1)
+  dev/_src/scss/ { /mixins/**, _libs, _vars, _base, _mwgrid .. }
+    gulpfile.js - htmlBuild (1)
+
 23.09
   gulpfile.js - htmlDev (1)
 

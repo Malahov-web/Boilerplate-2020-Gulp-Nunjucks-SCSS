@@ -35,14 +35,22 @@ const fs  = require('fs');
 // 2. Options
         // 'html'  : 'dev/_src/view/*.(html|njk)'
 const paths = {
+    // Файлы которые компилируются
     src: {
         'styles': 'dev/_src/scss/*.scss',
         'html'  : 'dev/_src/*.html'
     },
+    // Файлы которые отслеживаются (импортируемые)
+    // watch: {
+    //     'styles': 'dev/_src/scss/*.scss',
+    //     'html'  : 'dev/_src/*.html'
+    // }, 
+    // Файлы для разработки в Gulp, для браузера   
     dev: {
         'styles': 'dev/css',
         'html'  : 'dev'
     },
+    // Файлы готовые (чистые) для production
     dist: {
         'styles': 'dist/css',
         'html'  : 'dist'
@@ -73,7 +81,7 @@ function stylesBuild (argument) {
     // return src('dev/css/*.css')
     return src(paths.dev.styles + '/*.css')
         .pipe(cleanCSS({compatibility: 'ie11'}))
-        // .pipe(rename({suffix: '.min'}))  // DO: Не забыть изменить путь подключаемого файла в html   
+        // .pipe(rename({suffix: '.min'}))  // DO: Не забыть изменить путь подключаемого файла в html
         .pipe(dest(paths.dist.styles)) // .pipe(dest('dist/css'))
 }
 
@@ -88,6 +96,12 @@ function htmlDev (cb) {
         .pipe(dest(paths.dev.html))
         .pipe(bs.stream());
 }
+function htmlBuild (argument) {
+    return src(paths.dev.html + '/*.html')
+        // .pipe(gulp.dest('dist')) 
+        // .pipe(gulp.dest('dist')) 
+        .pipe(dest(paths.dist.html)) 
+}
 
 function bsRun () {
     // body... 
@@ -99,7 +113,8 @@ function bsRun () {
 
 function watchRun () {
     // body... 
-    watch('dev/_src/scss/*.scss', stylesDev);
+    // watch('dev/_src/scss/*.scss', stylesDev);  // -  Так НЕ попадают импорты в подпапках
+    watch('dev/_src/scss/**/*.scss', stylesDev);  // +  Так следим за всеми файлами
     watch('dev/_src/*.html', htmlDev);
     // watch(paths.src.html, htmlDev);
 }
@@ -116,13 +131,14 @@ function build () {
 exports.stylesDev = stylesDev;
 exports.stylesBuild = stylesBuild;
 exports.htmlDev = htmlDev;
+exports.htmlBuild = htmlBuild;
 
 exports.watchRun = watchRun;
 exports.bsRun = bsRun;
 // exports.default = series(watchRun, bsRun, stylesDev);
 exports.default = parallel(watchRun, bsRun, stylesDev, htmlDev);
 exports.clean = clean;
-exports.build = series(clean, stylesBuild)
+exports.build = series(clean, stylesBuild, htmlBuild)
 
 
 
