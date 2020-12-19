@@ -1,0 +1,28 @@
+
+dev/ 	// development dir
+	_src/
+        scss/
+            style.scss
+            _vars.scss
+            _base.scss
+            _fonts.scss
+            _libs.scss
+            _mixins.scss
+        view/
+            index.html
+            layout/
+                _layout.html
+                _head.html
+                _header.html
+                _footer.html
+                _sidebar.html
+                _scripts.html
+            blocks/
+                news/
+                    news.html
+                    news.scss
+                    news.js
+            components/
+                buttons/
+                    buttons.html
+                    buttons.scss

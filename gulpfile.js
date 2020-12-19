@@ -25,6 +25,7 @@ const sourcemaps = require('gulp-sourcemaps');  // Подключаем Gulp Sou
 // files
 const del = require('del'); // Подключаем библиотеку для удаления файлов и папок
 const fs  = require('fs');
+const data = require('gulp-data');
 
 // autoprefixer settings
 // const autoprefixerOptions = {
@@ -85,13 +86,27 @@ function stylesBuild (argument) {
         .pipe(dest(paths.dist.styles)) // .pipe(dest('dist/css'))
 }
 
+let nunjucksOptions = {
+    // path: ['app/view/'], // - +
+    path: ['dev/_src/view/'], // +
+    // path: ['dev/_src/'], // + with extends "view/layout/_layout.html"
+    // 
+    // path: ['app/view/**/'], //
+    // path: ['app/view/**.html'], // попробуем взять все файлы дял правильного кэширования
+    // path: ['app/view/**/*.html'], // попробуем взять все файлы во всех подпапках
+};
+
+
 function htmlDev (cb) {
     // body... 
     return src(paths.src.html)
-        // .pipe(data(function (file) {
-        //     return JSON.parse(fs.readFileSync('./dev/data/data.json'));
-        // }))
-        .pipe(nunjucksRender())
+        .pipe(data(function (file) {
+            // return JSON.parse(fs.readFileSync('./dev/data/data.json'));
+            return JSON.parse(fs.readFileSync('./dev/_src/data/data.json'));
+            // return JSON.parse(fs.readFileSync('./app/data/data.json'));
+        }))
+        // .pipe(nunjucksRender())
+        .pipe(nunjucksRender(nunjucksOptions))        
         .pipe(beautify.html({ indent_size: 4 }))
         .pipe(dest(paths.dev.html))
         .pipe(bs.stream());

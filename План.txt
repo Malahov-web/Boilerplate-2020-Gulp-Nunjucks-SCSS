@@ -1,6 +1,14 @@
-..Перенести блоки и компоненты, затем js, И дописать остальные таски
+..Перенести блоки и компоненты view/ {blocks, components}, затем js, И дописать остальные таски
+19.12
+  ..
+
 18.12
-  dev/_src/scss/ mixins/_set_fonts_object.scss
+  dev/_src/scss/ mixins/_set_fonts_object.scss, (1)
+  Readme.md - ## The Gulp frontend development paradigm; git (1)
+
+  dev/_src/view/layout/ _layout.html (1)
+  dev/_src/view/layout/ *.html, dev/_src/view/news/ (1)
+  dev/_src/view/news/, dev/_scr/data/data.json (0.5)
 
 17.12
   Парадигма.txt, dev/_src/scss/ { _fonts.scss, _services.scss } (1)

@@ -1,3 +1,8 @@
+18.12
+Перенести файлы стилей в _src/scss
+Перенести файлы разметки в _src/view
+Обновить view/layout/_layout.html  
+
 24.09
 JS сборку исходников на ES6, Babel, WebPack?
 

@@ -33,6 +33,86 @@ $accent: #9c3;
  *  
 */
 
+
+// .main {
+//     @include h_rhytm('column', $fb);
+//     float: right;
+//     width: 100%;
+//     // @media (min-width: #{map-get($devices, 'ds_')}px) {
+//     @media (min-width: bp('ds_')+0px ) {
+//         width: calc(100% - #{$sidebar_width}px - #{$sidebar_offset});
+//     }
+//     @media (min-width: bp('hd_')+0px ) {
+//         width: 67%;
+//     }    
+// }
+
+// .sidebar {
+//     @include v_rhytm('section-block', $l_h_base);
+//     @include h_rhytm('column', $fb);
+//     float: left;
+//     width: 100%;
+
+//     @media (min-width: bp('ds_')+0px ) {
+//         // На ds ширина фикс
+//         // margin: 0;
+//         width: $sidebar_width+px;
+//     }
+//     @media (min-width: bp('hd_')+0px ) {
+//         // На hd ширина в процентах
+//         // width: 25%;
+//         width: calc(33% - 2*#{$columns_gap}px);
+//     }    
+// }
+// .sidebar__block {
+//     margin-bottom: 1*$l_h_card;
+
+//     &-title {
+
+//         // width: 205px;
+//         // height: 14px;
+//         position: relative;
+//         background-color: $white-two;          
+//         // @include type_block_title;
+
+//         @include font_size_pro('h5');
+//         @include typo('title');
+//         @include height_leveling('text');
+//         @include color_scheme('extralight');
+//         text-align: center;
+
+//         // arrow
+//         &::before {
+//             @include triangle("down", 16px, 8px, $white-two);
+//             content: "";
+//             @include pseudoelement_left_top(50%, 100%);
+//             transform: translate(-50%, 0);
+//         }        
+
+
+//     }
+
+//     &-content {
+//         padding-left: 1*$l_h_card;
+//         padding-right: 1*$l_h_card;
+//         padding: 1*$l_h_card;
+//         background-color: $white;
+//     }
+
+// }
+
+.main--sidebar--left {
+    float: right;
+}
+
+.main--sidebar--right {
+    float: left;
+}
+
+.main--sidebar--right + .sidebar {
+    float: right;
+}
+
 /* 2. Header
  * **********************************************************************
  *  
