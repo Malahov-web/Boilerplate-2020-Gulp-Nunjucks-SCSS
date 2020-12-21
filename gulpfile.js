@@ -19,13 +19,20 @@ const cleanCSS = require('gulp-clean-css');
 // html
 const nunjucksRender = require('gulp-nunjucks-render'); 
 const beautify = require('gulp-beautify');
-//
+// js
+const   uglify = require('gulp-uglify');  // Подключаем Uglify
+// browser
 const bs = require('browser-sync').create();  // Подключаем Browser Sync
 const sourcemaps = require('gulp-sourcemaps');  // Подключаем Gulp Sourcemaps  ( создает карту, чтобы в инспекторе браузера показывать строку стиля в sass-файле   )
 // files
 const del = require('del'); // Подключаем библиотеку для удаления файлов и папок
 const fs  = require('fs');
 const data = require('gulp-data');
+const concat = require('gulp-concat'); // Подключаем  Gulp Concat
+const rename = require('gulp-rename');
+// images
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
 
 // autoprefixer settings
 // const autoprefixerOptions = {
@@ -34,27 +41,56 @@ const data = require('gulp-data');
 // const autoprefixerOptions = require('./.browserslistrc');
 
 // 2. Options
+
+const styles = {
+    'file_format' : 'scss'
+}
+const js = {
+    'file_format' : 'js',
+    'libs_path' : 'dev/libs/',
+    'plugins' : [
+        'libs_path' + '/jquery/dist/jquery.min.js',
+        // 'libs_path' + '/another/dist/another.min.js', // placeholder
+    ]
+}
+const js_jquery = js.libs_path + '/jquery/dist/jquery.min.js';
+
         // 'html'  : 'dev/_src/view/*.(html|njk)'
 const paths = {
+    'src_dir' :  'dev/_src',
+    'dev_dir' :  'dev',
+    'dist_dir':  'dist',
+
     // Файлы которые компилируются
     src: {
         'styles': 'dev/_src/scss/*.scss',
-        'html'  : 'dev/_src/*.html'
+        'html'  : 'dev/_src/*.html',
+        'js'    : 'dev/_src/js/*.js'
     },
     // Файлы которые отслеживаются (импортируемые)
-    // watch: {
-    //     'styles': 'dev/_src/scss/*.scss',
-    //     'html'  : 'dev/_src/*.html'
-    // }, 
+    watch: {
+        // 'styles': [ 'dev/_src/scss/**/*.scss', 'dev/_src/view/**/*.scss' ],
+        'styles': [ 'dev/_src/scss/**/*.scss', 'dev/_src/view/**/*.' + styles.file_format +'' ],
+        'html'  : ['dev/_src/*.html', 'dev/_src/view/**/*.html', 'dev/_src/data/**/*.json'],
+        'js'    : ['dev/_src/js/*.js']
+    }, 
     // Файлы для разработки в Gulp, для браузера   
     dev: {
         'styles': 'dev/css',
-        'html'  : 'dev'
+        'html'  : 'dev',
+        'js'    : 'dev/js',
+        // 'images': 'dev/images',
+        images:  'dev/images/',
+        'uploads': 'dev/uploads',
     },
     // Файлы готовые (чистые) для production
     dist: {
         'styles': 'dist/css',
-        'html'  : 'dist'
+        'html'  : 'dist',
+        'js'    : 'dist/js',
+        // 'images': 'dist/images',
+         images:  'dist/images/',
+        'uploads': 'dist/uploads',        
     },
 
     clean: 'dist/*'
@@ -118,6 +154,52 @@ function htmlBuild (argument) {
         .pipe(dest(paths.dist.html)) 
 }
 
+function jsDev (cb) {
+
+    // body... 
+    // return src([ paths.src.js, js_jquery] )
+    return src([ 
+            js_jquery,
+            // some_lib,
+            paths.src.js
+        ])
+
+        .pipe(concat('scripts.js'))
+        .pipe(rename('scripts.min.js'))
+        // .pipe(gulp.dest( paths.dev.js ));
+        .pipe(dest(paths.dev.js)) // .pipe(dest('dev/css'))
+        // .pipe(bs.stream()); // Отключено, чтобы не обновлялись страницы когда нужно сравнить
+}
+function jsBuild (argument) {
+    // body... 
+    return src(paths.dev.js + '/*.js')
+        .pipe(uglify())
+        .pipe(dest(paths.dist.js)) 
+}
+
+function imagesBuild (argument) {
+    // body... 
+    return src(paths.dev.images + '/**/*')
+        .pipe(imagemin({ // Сжимаем с наилучшими настройками
+            interlaced: true,
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(dest(paths.dist.images))    
+}
+function uploadsBuild (argument) {
+    // body... 
+    return src(paths.dev.uploads + '/**/*')
+        .pipe(imagemin({ // Сжимаем с наилучшими настройками
+            interlaced: true,
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(dest(paths.dist.uploads))    
+}
+
 function bsRun () {
     // body... 
     bs.init({
@@ -128,10 +210,16 @@ function bsRun () {
 
 function watchRun () {
     // body... 
-    // watch('dev/_src/scss/*.scss', stylesDev);  // -  Так НЕ попадают импорты в подпапках
-    watch('dev/_src/scss/**/*.scss', stylesDev);  // +  Так следим за всеми файлами
-    watch('dev/_src/*.html', htmlDev);
-    // watch(paths.src.html, htmlDev);
+    // // watch('dev/_src/scss/*.scss', stylesDev);  // -  Так НЕ попадают импорты в подпапках
+    // watch('dev/_src/scss/**/*.scss', stylesDev);  // +  Так следим за всеми файлами
+    // watch('dev/_src/*.html', htmlDev);
+    // // watch(paths.src.html, htmlDev);
+
+    watch(paths.watch.styles, stylesDev);  // +  Так следим за всеми файлами
+    watch(paths.watch.html, htmlDev);  // +  Так следим за всеми файлами
+    watch(paths.watch.js, jsDev);  // +  
+
+
 }
 
 function clean () {
@@ -153,7 +241,7 @@ exports.bsRun = bsRun;
 // exports.default = series(watchRun, bsRun, stylesDev);
 exports.default = parallel(watchRun, bsRun, stylesDev, htmlDev);
 exports.clean = clean;
-exports.build = series(clean, stylesBuild, htmlBuild)
+exports.build = series(clean, stylesBuild, htmlBuild, jsBuild, imagesBuild, uploadsBuild)
 
 
 

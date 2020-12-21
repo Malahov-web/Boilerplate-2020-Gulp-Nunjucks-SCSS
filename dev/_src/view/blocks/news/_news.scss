@@ -13,12 +13,13 @@
 
 // Block vars
 $blocknameItemPaddings: 20px;
-$blocknameDecorBg: $globalColor;
+// $blocknameDecorBg: $globalColor;
 
 // Block and elements
 .news{
 
     &__item{
+        width: 100%;
         // @include height_leveling('fullheight');
         // @extend %shadow_card;
 
@@ -61,7 +62,8 @@ $blocknameDecorBg: $globalColor;
             // @include font_size_pro('base');
             // @include height_leveling('base');
             // @include typo('date');
-            color: $gray-base;
+            // color: $gray-base;
+            color: green;
             
 
         }

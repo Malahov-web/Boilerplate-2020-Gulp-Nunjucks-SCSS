@@ -22,6 +22,7 @@
 
 @import 'plugins/plugins'; // external plugins custom styles
 // @import 'components';   // moved to -> _base
+@import 'blocks&components';   // moved to -> _base
 // @import 'print';     // print v styles
 
 $accent: #3c9;
@@ -171,9 +172,14 @@ header {
 
 }
 
-.title {
+.title,
+.logo {
     // font-size: get_font_size();
+    background-color: #fff;
     color: #000;
+    // color: $accent;
 
     @include font_size_pro('h3');
+
+    @extend %border_circle;
 }

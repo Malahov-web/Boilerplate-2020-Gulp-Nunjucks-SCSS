@@ -1,6 +1,13 @@
+
+21.12
+  gulpfile.js - update: paths, watchRun() (0.5)
+  gulpfile.js - update: paths; jsDev(); dev/_src/js (1)
+
+  gulpfile.js - jsBuild(), imagesBuild(), uploadsBuild(),  build :update, (1)
+
 ..Перенести блоки и компоненты view/ {blocks, components}, затем js, И дописать остальные таски
 19.12
-  ..
+  dev/_src/view/blocks/_blockname, dev/_src/view/components/ ; git (1)
 
 18.12
   dev/_src/scss/ mixins/_set_fonts_object.scss, (1)
