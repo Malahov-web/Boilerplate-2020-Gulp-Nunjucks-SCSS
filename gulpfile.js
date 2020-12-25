@@ -21,6 +21,7 @@ const nunjucksRender = require('gulp-nunjucks-render');
 const beautify = require('gulp-beautify');
 // js
 const   uglify = require('gulp-uglify');  // Подключаем Uglify
+// const   uglify = require('gulp-uglify-es');  // Подключаем Uglify
 // browser
 const bs = require('browser-sync').create();  // Подключаем Browser Sync
 const sourcemaps = require('gulp-sourcemaps');  // Подключаем Gulp Sourcemaps  ( создает карту, чтобы в инспекторе браузера показывать строку стиля в sass-файле   )
@@ -30,9 +31,15 @@ const fs  = require('fs');
 const data = require('gulp-data');
 const concat = require('gulp-concat'); // Подключаем  Gulp Concat
 const rename = require('gulp-rename');
+
+const async = require('async');
+const consolidate = require('gulp-consolidate');
 // images
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
+const svgmin = require('gulp-svgmin');
+// fonts
+const iconfont = require('gulp-iconfont');
 
 // autoprefixer settings
 // const autoprefixerOptions = {
@@ -65,7 +72,8 @@ const paths = {
     src: {
         'styles': 'dev/_src/scss/*.scss',
         'html'  : 'dev/_src/*.html',
-        'js'    : 'dev/_src/js/*.js'
+        'js'    : 'dev/_src/js/*.js',
+        'svg'   : 'dev/_src/images/svg/*.svg'
     },
     // Файлы которые отслеживаются (импортируемые)
     watch: {
@@ -80,8 +88,9 @@ const paths = {
         'html'  : 'dev',
         'js'    : 'dev/js',
         // 'images': 'dev/images',
-        images:  'dev/images/',
+        'images':  'dev/images/',
         'uploads': 'dev/uploads',
+        'svg'   : 'dev/images/svg/'
     },
     // Файлы готовые (чистые) для production
     dist: {
@@ -89,7 +98,7 @@ const paths = {
         'html'  : 'dist',
         'js'    : 'dist/js',
         // 'images': 'dist/images',
-         images:  'dist/images/',
+        'images':  'dist/images/',
         'uploads': 'dist/uploads',        
     },
 
@@ -200,6 +209,68 @@ function uploadsBuild (argument) {
         .pipe(dest(paths.dist.uploads))    
 }
 
+function svgMin (argument) {
+    // body... 
+    return src(paths.src.svg) 
+        .pipe(svgmin({
+            plugins: [
+                { removeDimensions: true },
+                { cleanupListOfValues: true },
+                { cleanupNumericValues: true }
+            ]
+        }))
+        .pipe(rename(function (path) {
+            path.basename = path.basename.replace(/\ /g, "")
+        }))
+        .pipe(dest(paths.dev.svg));
+}
+
+const fontName = 'iconsFontName';
+function iconFontMake (done) {
+    // body... 
+    // const iconStream = src([paths.dev.svg])
+    const iconStream = src([paths.dev.svg + '*.svg'])
+        .pipe(iconfont({
+            fontName: fontName,
+            formats: ['ttf', 'woff', 'svg', 'woff2'],
+            fixedWidth: true,
+            centerHorizontally: true,
+            normalize: true,
+            fontHeight: 1000
+        }));
+
+    // console.log('iconStream');
+    // console.log(iconStream);
+
+    async.parallel([
+        function handleGlyphs(cb) {
+            iconStream.on('glyphs', function (glyphs, options) {
+                src('dev/_src/images/svgfontstyle/svgfontstyle.scss')
+
+                    .pipe(consolidate('lodash', {
+                        glyphs: glyphs,
+                        fontName: fontName,
+                        fontPath: '../fonts/',
+                        className: fontName,
+
+                    }))
+                    .pipe(dest('dev/_src/scss/'))
+                    .on('finish', cb);
+            });
+        },
+        function handleFonts(cb) {
+            iconStream
+                .pipe(dest('dev/fonts/'+fontName+'/'))
+                .on('finish', cb);
+        }        
+    // ], done);
+    ]);
+
+    // return; // -
+    done();
+
+}
+
 function bsRun () {
     // body... 
     bs.init({
@@ -235,6 +306,9 @@ exports.stylesDev = stylesDev;
 exports.stylesBuild = stylesBuild;
 exports.htmlDev = htmlDev;
 exports.htmlBuild = htmlBuild;
+
+exports.svgMin = svgMin;
+exports.iconFontMake = iconFontMake;
 
 exports.watchRun = watchRun;
 exports.bsRun = bsRun;

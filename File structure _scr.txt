@@ -26,3 +26,8 @@ dev/ 	// development dir
                 buttons/
                     buttons.html
                     buttons.scss
+
+        images/
+            svg/                    // svg icons for font
+            svgfontstyle/
+                svgfontstyle.scss   
