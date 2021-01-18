@@ -1,3 +1,9 @@
+18.01
+  Add Emails tusks - 
+
+25.12
+  Add svg files and tasks - update gulpfile.js - svgMin(), iconFontMake() (0.5)
+
 ..добавить Issue.. (js, ?)
 
 21.12

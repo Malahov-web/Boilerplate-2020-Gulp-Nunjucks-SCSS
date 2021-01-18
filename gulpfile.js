@@ -34,12 +34,16 @@ const rename = require('gulp-rename');
 
 const async = require('async');
 const consolidate = require('gulp-consolidate');
+const plumber = require('gulp-plumber');  // Преодхраняет остановку задачи из-за ошибки
 // images
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const svgmin = require('gulp-svgmin');
 // fonts
 const iconfont = require('gulp-iconfont');
+// emails
+// const emailBuilder = require('gulp-email-builder');
+
 
 // autoprefixer settings
 // const autoprefixerOptions = {
@@ -103,6 +107,23 @@ const paths = {
     },
 
     clean: 'dist/*'
+}
+
+const pathsEmail = {
+    // см. исходные файлы в yana.loc
+    // Файлы которые компилируются
+    src: {
+        // 'styles': 'dev/_src/scss/*.scss',
+        'styles': 'dev/_src/view/emails/**/*.scss',
+        // 'styles': 'view/emails/**/*.scss',
+        'html':   'dev/_src/view/emails/*.html'
+    },
+    dev: {
+        'base': 'dev/emails',
+        'styles': 'dev/_src/view/emails',
+        'html': 'dev/emails',
+    }
+
 }
 
 
@@ -271,6 +292,87 @@ function iconFontMake (done) {
 
 }
 
+// опции для разработки Emais
+var optionsEmailBuilder = { 
+    encodeSpecialChars: false, 
+
+};
+let nunjucksOptionsEmail = {
+    // path: [pathsEmail.dev.?],
+    path: ['dev/_src/view/emails/'],
+
+};
+let builder = emailBuilder(optionsEmailBuilder);
+function emailDev (argument) {
+    // body... 
+    // return gulp.src(pathsEmail.src.styles) // (!) .html  а Не .styles
+    return src(pathsEmail.src.html)
+
+        // Пробуем добавить компиляцию
+        .pipe(nunjucksRender(nunjucksOptionsEmail))
+        .pipe(beautify.html({ indent_size: 4 }))
+
+        .pipe(builder.build())
+        // .pipe(gulp.dest(path_base + 'view/emails'))            
+        // .pipe(gulp.dest(path_base + 'emails'))
+        .pipe(dest( pathsEmail.dev.html )) // Не совсем правильный путь
+}
+function emailStylesDev (argument) {
+    // return gulp.src(path_base + 'view/emails/**/*.scss')
+    // return gulp.src(pathsEmail.src.styles)
+    return src(pathsEmail.src.styles)
+
+        .pipe(sourcemaps.init())
+        .pipe(plumber())        
+        .pipe(sass())
+        .pipe(sourcemaps.write())      // .pipe(sourcemaps.write('.')) // ('.') - Выводит в отдельный файл
+        .pipe(dest(pathsEmail.dev.styles)) // .pipe(dest('dev/css'))
+        .pipe(bs.stream());
+
+}
+
+// опции для тестовой рассылки  sendEmailTest()
+var current_date = new Date().toString();   
+var email_subject = 'Email Test Sending';    
+var optionsSend = { 
+    encodeSpecialChars: false, 
+
+    emailTest : {
+        // Your Email
+        from : 'malahovk@gmail.com',
+
+        to : 'malahovk@gmail.com,' + 
+            'hotice@lenta.ru,' +
+            'gafuroff.al@yandex.ru,' +
+            'pospelovasq@yandex.ru,' +
+            'site@malahov-web.com',                
+
+        // Your email Subject
+        subject : email_subject + ' [' + current_date + ']',
+
+        // Optional
+        transport: {
+            type: 'SMTP',
+            options: {
+                service: 'gmail',
+                auth: {
+                    user: 'malahovk@gmail.com',
+                    pass: "h',,bn"
+                }
+            }
+        }
+    },        
+}; 
+// 3.10 sendEmailTest - 
+var emailTester = emailBuilder(optionsSend);
+function sendEmailTest (argument) {
+    // body... 
+    // return src(path_base+'emails/*.html')
+    return src( pathsEmail.dev.base +'/*.html')
+        .pipe(emailTester.sendEmailTest());
+}
+
+
 function bsRun () {
     // body... 
     bs.init({
@@ -292,6 +394,17 @@ function watchRun () {
 
 
 }
+function watchEmailRun (argument) {
+    // body... 
+    watch(pathsEmail.src.styles, emailStylesDev );  //    
+    // watch(paths.watch.html, htmlDev); // ..
+
+    // gulp.watch([path_base + 'view/emails/*.html', path_base + 'view/emails/**/*.scss'],  gulp.parallel('emailBuilder'));
+
+    // watch( [ pathsEmail.src.html, pathsEmail.src.styles ], emailBuilder ) // Вот так кажется в v4 Не работает
+    watch(  pathsEmail.src.html,  emailDev )
+    watch(  pathsEmail.src.styles , emailDev )
+}
 
 function clean () {
     // body...
@@ -310,10 +423,18 @@ exports.htmlBuild = htmlBuild;
 exports.svgMin = svgMin;
 exports.iconFontMake = iconFontMake;
 
+// emails
+exports.emailStylesDev = emailStylesDev;
+exports.emailDev = emailDev;
+exports.sendEmailTest = sendEmailTest;
+
 exports.watchRun = watchRun;
 exports.bsRun = bsRun;
 // exports.default = series(watchRun, bsRun, stylesDev);
 exports.default = parallel(watchRun, bsRun, stylesDev, htmlDev);
+exports.defaultEmail = parallel(watchEmailRun, bsRun, emailStylesDev, emailDev)
+
+
 exports.clean = clean;
 exports.build = series(clean, stylesBuild, htmlBuild, jsBuild, imagesBuild, uploadsBuild)
 
