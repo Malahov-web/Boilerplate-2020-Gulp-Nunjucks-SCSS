@@ -1,5 +1,9 @@
+18.02
+  Add js/ mw-libs - modals.js; Update modals() - add callback and events delegation
+
+
 18.01
-  Add Emails tusks - 
+  Add Emails tusks - emailDev(), emailStylesDev(), sendEmailTest(), defaultEmail (0.5)
 
 25.12
   Add svg files and tasks - update gulpfile.js - svgMin(), iconFontMake() (0.5)
