@@ -1,0 +1,37 @@
+
+
+{% macro breadcrumbs_skynet (block_class='', value='') %}
+<ul class="breadcrumbs {{ block_class }}">
+    <li class="breadcrumbs__item">
+        <a href="index.html">Главная</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a href="news.html">новости</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <span>Перепись Малого Бизнеса 2021</span>
+    </li>
+</ul>
+{% endmacro %}
+
+
+
+
+{% macro breadcrumbs_bootstrap (block_class='', value='') %}
+<nav aria-label="breadcrumb" class="mb-md">
+    <ol class="breadcrumb {{ block_class }}">
+<!--         <li class="breadcrumb-item"><a href="#">Новости</a></li>
+        <li><span>&mdash;&mdash;</span></li>
+        <li class="breadcrumb-item active" aria-current="page">Пресс-завтрак 12 августа</li> -->
+
+        <li class="breadcrumb-item"><a href="#">О проекте</a></li>
+        <li><span>&mdash;&mdash;</span></li>
+        <li class="breadcrumb-item active" aria-current="page">Новости</li>
+
+    </ol>
+</nav>
+{% endmacro %}
+
+
+
+

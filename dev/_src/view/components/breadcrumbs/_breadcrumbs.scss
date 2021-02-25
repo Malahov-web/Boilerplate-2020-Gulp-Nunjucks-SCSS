@@ -1,0 +1,119 @@
+/*
+ * Blocks vars
+ * Block and elements styles
+ * Other styles (Not block elems, but associated with it)
+ * Media rules - Mobile First, use min-width
+ * Default states
+ */
+
+// Block vars
+
+$breadcrumbsStrHeight: $l_h_head;
+
+// TODO: breacrumbs comp
+.breadcrumb {
+
+    li {
+        // display: list-item;
+        // display: inline-block;
+
+        @include flex(flex-start, center, row, wrap);
+        display: inline-flex;
+        font-family: $font_family_head;
+        @include font_size('base');
+
+        span {
+            color: $grey;
+        }
+        a {
+            &:hover {
+                color: $accent;
+            }
+        }
+    }
+    li.active {
+        color: $grey;
+    }
+
+    // Blocks Modificators
+    &--dark li {
+
+        line-height: $l_h;
+        // is span separator always ?
+        span {
+            color: $grey;
+            margin: 0 0.5em;
+            color: $accent;
+        }
+        a {
+            color: $grey;
+            &:hover {
+                color: $accent;
+            }
+        }
+    }
+    &--dark li.active {
+        color: $white;
+    }
+
+}
+
+
+
+// Block and elements
+// .blockname {
+//     padding: 10px;
+
+//     &:hover {
+
+//     }
+//     // Block Elements    
+//     &__item {
+//         &-title {
+//             // Default rules
+//         }
+//         &-text {
+
+//         }
+//         &-image {
+//             img {  }
+//         }
+//     }
+
+//     // Blocks Modificators
+//     &--success &__item {
+//         &-title {
+//             // Ovverride rules
+//         }
+//     }
+
+//     // Inheritance (for components)
+//     .otherblock {
+//         // Ovverride rules
+//     }
+// }
+
+// Not block elems, but associated with it
+
+// .section-breadcrumbs {
+//     margin-bottom: -$breadcrumbsStrHeight;
+//     position: relative;
+//     z-index: $zindex_icon;
+// }
+.breadcrumbs-outer {
+
+}
+
+
+// Media rules - Mobile First, use min-width
+// @media ( min-width: $screen-sm-min ) {
+
+//     .blockname {
+//         // etc..
+//     }  
+// }
+
+// Default states
+.blockname {
+    display: none;
+}
