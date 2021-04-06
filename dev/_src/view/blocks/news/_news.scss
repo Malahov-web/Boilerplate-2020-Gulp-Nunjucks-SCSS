@@ -22,6 +22,29 @@ $blocknameItemPaddings: 20px;
         width: 100%;
         // @include height_leveling('fullheight');
         // @extend %shadow_card;
+         
+        // TEST DEV: cut_corners()
+        position: relative;
+        background-color: $accent;
+        padding: 1em;
+        // @include cut_corners(30px, $white);
+
+        // @include crop_corners( ( ('left top', 10px, $white), ('right top', 20px, $white) ) );
+
+        // @include cuted_corners( ('left top', 10px, $white), ('right top', 20px, $white)  );
+        // @include cuted_corners( 10px, ('right top', 20px, $white)  );
+        // @include cuted_corners( 10px  );
+        
+
+        &-outer:nth-child(1) & {
+            // @include cut_corners(30px, $grey_light);
+        }
+        &-outer:nth-child(2) & {
+            // @include cuted_corners( ('left top', 10px, $grey_light), ('right top', 20px, $grey_light) );
+            // @include cuted_corners( ('right top', 30px, $grey_light), ('right top', 20px, $grey_light) );
+            @include cuted_corners( ('right top', 30px, $grey_light), ('right bottom', 20px, $grey_light) );
+        }
+        
 
         &-image{
             // margin-bottom:  1/2*$l_h_base;

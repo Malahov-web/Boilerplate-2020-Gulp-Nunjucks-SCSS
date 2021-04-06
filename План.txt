@@ -1,3 +1,16 @@
+6.04
+  Update mixins/specials - add cutted_corners() (2)
+
+5.04
+  Update mixins/specials/ _cutted_corners (1)
+
+11.03
+  Add js/ mw-libs - menu-responsive.jquery.js; fix menuResponsive() (1)
+
+26.02
+  Add Components - breacrumbs (0.5)
+
+--20.02
 18.02
   Add js/ mw-libs - modals.js; Update modals() - add callback and events delegation
 
