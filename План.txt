@@ -1,3 +1,9 @@
+29.06
++   Update Components - breadcrumbs,
++  Add Components - modals,
++  Add plugins - selectric,
++  Update plugins - swiper (0.5)
+
 6.04
   Update mixins/specials - add cutted_corners() (2)
 

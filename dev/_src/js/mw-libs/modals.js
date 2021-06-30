@@ -45,7 +45,8 @@ function Appointment__showSpecInfo(target) { }
 			var callback = $(this).attr('data-js-callback'); // имя св-ва .Appointment__showSpecInfo
 
 			let func = window[callback];
-			func(event.target);
+// !!! This string call error if don't pass parameter			
+			func(event.target);  
 			// func(this);
 
 			// callback();		

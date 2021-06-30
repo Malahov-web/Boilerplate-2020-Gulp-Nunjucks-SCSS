@@ -6,11 +6,19 @@
  * Default states
  */
 
+/*
+ * 1. breadcrumb ( breadcrumb li a)
+ * 2. breadcrumbs skynet
+ * 3. Breadcrumbs NavXT (WordPress)
+ * 3. Breadcrumbs Bootstrap
+ */
+
 // Block vars
 
 $breadcrumbsStrHeight: $l_h_head;
 
 // TODO: breacrumbs comp
+// .breadcrumbs {
 .breadcrumb {
 
     li {
@@ -59,6 +67,48 @@ $breadcrumbsStrHeight: $l_h_head;
 }
 
 
+/*
+ * 3. Breadcrumbs NavXT
+ */
+// $breadcrumbsStrHeight: $l_h_head;
+
+// Breadcrumbs NavXT
+
+.breadcrumbs {
+    // пункты 
+    // span {
+    // }
+    span[typeof="ListItem"] {
+        // display: inline-block;
+        @include font_size_pro('h6');
+        line-height: $l_h_head;
+        text-transform: uppercase;
+        color: $grey;
+        color: $text;
+
+        a {
+            color: $grey;
+            &:hover {
+                color: $accent;
+            }
+        }
+        // активный, последний пункт
+        span.current-item {
+            // color: $grey;
+            color: $text;
+        }
+    }
+    // разделитель
+    // в настройках в шаблоне обернуть в span.separator
+    span.separator {
+        @include font_size_pro('h6');
+        line-height: $l_h_head;
+        text-transform: uppercase;
+        color: $grey;
+    }    
+
+}
+
 
 // Block and elements
 // .blockname {
@@ -92,6 +142,9 @@ $breadcrumbsStrHeight: $l_h_head;
 //         // Ovverride rules
 //     }
 // }
+// 
+
+
 
 // Not block elems, but associated with it
 

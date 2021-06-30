@@ -1,5 +1,30 @@
 // B.2 Swiper
 
+
+/*
+ * 1. Скрываем до инициализации
+ * 2. Отменяем обрезание overflow на моб-х
+ * 3. Кнопки центрирование
+ * 4. Кнопки - disabled (промотка до предела)
+ * 5. Кнопки - lock (промотка выключена, потому что все слайды помещаются на экране)
+ * 6. Pagination - Кружочки по центру снизу
+ * 1. asdfdsa
+ * 1. asdfdsa
+ * 1. asdfdsa
+
+ */
+
+
+// 1. Скрываем до инициализации - чтобы слайды не прыгали
+// TODO: + Проверить
+.swiper-container {
+    &:not(&-initialized) {
+        display: none;
+    }
+}
+
+
+// 2. Отменяем обрезание overflow на моб-х
 .swiper-container {
     // width: 1000px;
     overflow: visible;
@@ -8,7 +33,8 @@
     }    
 }
 
-// Кнопки центрированы, стилизация в другом месте
+
+// 3. Кнопки центрированы, стилизация в другом месте
 .swiper-button-prev,
 .swiper-button-next {
     display: inline-flex;
@@ -18,10 +44,10 @@
     // width: 2*$l_h_base;
     // height: 2*$l_h_base;
     // @extend %border_circle;
-// width: 50px;
-// height: 50px;
-// left: 267px;
-// top: 307px;
+    // width: 50px;
+    // height: 50px;
+    // left: 267px;
+    // top: 307px;
 
     // background: #FFFFFF;
     // border-radius: 30px;    
@@ -46,7 +72,31 @@
     }
 }
 
-// Кружочки по центру снизу
+
+// 4. Кнопки - disabled
+.swiper-button-disabled {
+
+    .button-arrow,
+    .button-arrow:hover {
+        opacity: 0.25;
+        cursor: default;
+        svg {
+            fill: $grey;
+            stroke: $grey_dark;
+        }   
+    }
+
+}
+
+
+// 5. Кнопки  -lock
+// Когда все слайды помещаются на экране - кнопки имеют выключенный класс
+.swiper-button-lock {
+    display: none;
+}
+
+
+// 6. Pagination - Кружочки по центру снизу
 .swiper-pagination {
     @include flex(center, center);
     margin-top: 2*$l_h_base;
