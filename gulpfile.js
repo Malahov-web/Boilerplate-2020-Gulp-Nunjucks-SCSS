@@ -31,10 +31,12 @@ const fs  = require('fs');
 const data = require('gulp-data');
 const concat = require('gulp-concat'); // Подключаем  Gulp Concat
 const rename = require('gulp-rename');
+const replace = require('gulp-replace');
 
 const async = require('async');
 const consolidate = require('gulp-consolidate');
 const plumber = require('gulp-plumber');  // Преодхраняет остановку задачи из-за ошибки
+const gulpif = require('gulp-if');
 // images
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
@@ -292,6 +294,178 @@ function iconFontMake (done) {
 
 }
 
+
+/*
+Создает директироо по пути 
+dev/_src/view/blocks/_template
+*/
+
+
+// function createBlock (blockname) {
+//     // body... 
+
+//     // console.log(process.argv);
+//     console.log(process.argv[3]);
+
+//     // return src('dev/_src/view/blocks/template/_template.*')
+//     return src('dev/_src/view/blocks/_template/_template.scss')
+
+//         // .pipe(rename({suffix: '.min'}))  // DO: Не забыть изменить путь подключаемого файла в html
+
+
+//         .pipe(rename(function (path) {
+//             // Updates the object in-place
+//             console.log('blockname');
+//             console.log(blockname);
+//             // path.dirname = "dev/_src/view/blocks/template/" + blockname;
+//             path.basename = process.argv[3];
+
+
+//         }))
+//         // .pipe(dest( 'dev/_src/view/blocks/' )) 
+//         .pipe(dest( 'dev/_src/view/blocks/' )) 
+//         // .pipe(dest( '/' )) 
+
+
+
+
+//     // return src('dev/_src/scss/*.scss')
+
+//     //     .pipe(sourcemaps.init())
+//     //     .pipe(sass())
+//     //     .pipe(sourcemaps.write())      // .pipe(sourcemaps.write('.')) // ('.') - Выводит в отдельный файл
+//     //     .pipe(autoprefixer())        
+//     //     .pipe(dest(paths.dev.styles)) // .pipe(dest('dev/css'))
+//     //     .pipe(bs.stream());
+
+//     // cb();
+// }
+
+
+// // v2
+// function createBlock () {
+//     // body... 
+
+//     // console.log(process.argv);
+//     // console.log(process.argv[3]); // + '-myblockname'
+//     const blocknameArg = process.argv[3]
+//     const blockname = blocknameArg.slice(1, blocknameArg.length )
+
+//     // return src('dev/_src/view/blocks/_template/_template.*')
+//     // return src('dev/_src/view/blocks/_template/_template.scss')
+//     return src('dev/_src/view/blocks/_template/*')
+
+//         // .pipe(rename({suffix: '.min'}))  // DO: Не забыть изменить путь подключаемого файла в html
+
+
+//         .pipe(rename(function (path) {
+//             // Updates the object in-place
+//             console.log('blockname');
+//             console.log(blockname);
+//             // path.dirname = "dev/_src/view/blocks/template/" + blockname;
+//             path.basename = '_' + blockname // process.argv[3];
+//         }))
+
+//         .pipe(dest( 'dev/_src/view/blocks/' + blockname )) 
+// }
+
+
+
+
+// v3
+// Call: 
+// > gulp cb -myblockname
+function createBlock () {
+
+    // Получаем параметр из коммандной строки
+    const blocknameArg = process.argv[3]
+    const blockname = blocknameArg.slice(1, blocknameArg.length )
+
+    return src('dev/_src/view/blocks/_template/*')
+
+        // Изменяем контент в файле
+        // .pipe(replace(/http:\/\/localhost:\d+/g, 'http://example.com'))
+        // .pipe(replace( ' ', '_' )) // +
+        // .pipe(replace( '.blockname', '.' + blockname )) // +
+        .pipe(replace( 'blockname',  blockname )) // +
+        // .pipe(replace( 'news', 'blockname' )) // DEV
+
+
+        // .pipe(
+
+        //     // gulpif(
+        //     //     function (file) {
+
+        //     //         console.log('file');
+        //     //         console.log(file);                
+        //     //         return (file.relative === 'style.scss')                   
+        //     //     },
+        //     //     function (file) {
+
+        //     //         console.log('file');
+        //     //         console.log(file);                
+        //     //         // return (file.relative === 'style.scss')                   
+        //     //     }             
+        //     //     // console.log('file')
+        //     //     // postcss(processors, {syntax: syntax_scss})
+        //     // )  
+        // )  
+
+        // v.2 Изменяем контент в файле
+        // - Не работает :  TypeError: dest.on is not a function
+        // .pipe(
+        //         function (file) {
+
+        //             console.log('file');
+        //             console.log(file);                
+        //             // return (file.relative === 'style.scss')              
+        //             return file     
+        //         } 
+        // ) 
+         
+        // .pipe(
+        //     gulpif(
+        //         function (file) {
+
+        //             console.log('file');
+        //             console.log(file);                
+        //             return (file.relative === 'style.scss')                   
+        //         },
+        //         function (file) {
+
+        //             console.log('file');
+        //             console.log(file);                
+        //             // return (file.relative === 'style.scss')                   
+        //         }             
+        //         // console.log('file')
+        //         // postcss(processors, {syntax: syntax_scss})
+        //     )  
+        // )  
+        
+        // Переименовываем файл
+        .pipe(rename(function (path) {
+            // console.log('blockname');
+            // console.log(blockname);
+            // path.basename = '_' + blockname // process.argv[3];             // path.dirname = "dev/_src/view/blocks/template/" + blockname;
+
+            let fileBasename = path.basename
+            // console.log('fileBasename:');
+            // console.log(fileBasename);
+
+            // let newFileBasename = 
+            let newFileBasename = fileBasename.replace('template', blockname);
+            console.log('newFileBasename:');
+            console.log(newFileBasename);  
+            path.basename = newFileBasename       
+
+        }))
+
+        .pipe(dest( 'dev/_src/view/blocks/' + blockname )) 
+}
+
+ 
+
+
 // опции для разработки Emais
 // var optionsEmailBuilder = { 
 //     encodeSpecialChars: false, 
@@ -422,6 +596,9 @@ exports.htmlBuild = htmlBuild;
 
 exports.svgMin = svgMin;
 exports.iconFontMake = iconFontMake;
+
+exports.createBlock = createBlock;
+exports.cb = createBlock;
 
 // emails
 // exports.emailStylesDev = emailStylesDev;

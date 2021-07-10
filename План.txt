@@ -1,3 +1,20 @@
+
+
+..см - добавить data для макетов
+  https://fakejson.com/how-to-connect-to-the-fakejson-api-using-pure-javascript
+.. add task createComp, issue, commit
+
+8.07
+  gulpfile.js - createBlock () (Update Task)
+
+5.07
+  gulpfile.js - createBlock (1)   ( Add Task )
+
+Move to TODO:
+  add components from syzmyas, school-163, taro and Bolierplate-2019
+
+..add issue to last commit
+
 29.06
 +   Update Components - breadcrumbs,
 +  Add Components - modals,
